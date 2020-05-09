@@ -80,7 +80,7 @@ const getBestDirectionFromSCGToCentralWorld = (req, res) => {
         params: {
           origin: '13.8058793,100.535343',
           destination: '13.7466304,100.5371464',
-          key: "AIzaSyCweGtpWBk5TyPSocyMXQeMKujJ1neOtsA",
+          key: "", //make sure to add key
         }
       })
         .then(function (response) {
