@@ -22,4 +22,4 @@ app.get('/getDirection', getBestDirectionFromSCGToCentralWorld);
 app.post('/doscgWebHook', lineMessaging);
 
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+app.listen(port, () => console.log(`DoSCG API listening at http://localhost:${port}`))
