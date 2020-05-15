@@ -2,7 +2,7 @@ import redis from 'redis'
 import bluebird from 'bluebird'
 
 const client = redis.createClient(process.env.REDIS_URL);
-bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(client);
 client.on('reconnecting', console.log.bind(console));
 
 // Listen to errors
