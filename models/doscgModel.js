@@ -1,8 +1,7 @@
 import redis from 'redis'
-import bluebird from 'bluebird'
+import { promisify } from 'util'
 
 const client = redis.createClient(process.env.REDIS_URL);
-bluebird.promisifyAll(client);
 client.on('reconnecting', console.log.bind(console));
 
 // Listen to errors
@@ -16,7 +15,8 @@ client.on('error', (err) => {
 });
 
 const getCache = key => {
-  const promise = client.getAsync(key).then(function(reply) {
+  const getAsync = promisify(client.get).bind(client);
+  const promise = getAsync(key).then(function(reply) {
     return reply;
   });
   return Promise.all([promise]);
