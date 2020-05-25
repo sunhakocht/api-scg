@@ -1,7 +1,7 @@
-import redis from 'redis'
-import { promisify } from 'util'
+import asyncRedis from 'async-redis';
 
-const client = redis.createClient(process.env.REDIS_URL);
+const client = asyncRedis.createClient(process.env.REDIS_URL);
+
 client.on('reconnecting', console.log.bind(console));
 
 // Listen to errors
@@ -14,18 +14,11 @@ client.on('error', (err) => {
   throw err;
 });
 
-const getCache = key => {
-  const getAsync = promisify(client.get).bind(client);
-  const promise = getAsync(key).then(function(reply) {
-    return reply;
-  });
-  return Promise.all([promise]);
-}
+const getCache = async key => JSON.parse(await client.get(key))
 
 const setCache = (key, result) => client.set(key, JSON.stringify(result), 'EX', 60 * 5)
 
 export {
   getCache,
   setCache,
-  client
 }
